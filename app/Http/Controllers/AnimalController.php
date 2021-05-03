@@ -10,6 +10,7 @@ use App\Models\AdoptionRequest;
 class AnimalController extends Controller
 {
     public function __construct() {
+        // ensuring users have to be signed in.
         $this->middleware('auth');
     }
 
@@ -52,6 +53,7 @@ class AnimalController extends Controller
         }
     }
 
+    // storing the animal entry in the system.
     public function store(Request $request) {
         // form validation
         $this->validate($request, [
@@ -116,6 +118,8 @@ class AnimalController extends Controller
         }
     }
 
+    // checks whether or not the user has admin rights. (staff users)
+    // only staff users will be able to edit an animal entry.
     public function edit($id) {
         if(Gate::allows('admin-check')) {
             $animal = Animal::findOrFail($id);
@@ -125,6 +129,7 @@ class AnimalController extends Controller
         }
     }
 
+    // updating the animal entry with new information.
     public function update(Request $request) {
         // finding the associated animal object
         $animal = Animal::findOrFail(request('animalId'));

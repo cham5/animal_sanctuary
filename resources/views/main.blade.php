@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+<!--    Landing page that users will see when opening the website link. 
+        Contains a title and a prompt for users to either login/register or
+        go to the home page if they're already logged in. -->
+        
 @section('content')
 <div class="content">
     <div class="title">

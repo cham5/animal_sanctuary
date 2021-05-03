@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
+<!-- Page that shows a list of all the animals in the system, which only staff 
+    users are allowed to see. -->
 @section('content')
     <div class="container">
+        <!-- Button that allows user to go back to home page. -->
         <a href="/home" class="btn btn-primary">Back to Home</a>
         <br><br>
         <!-- display success message -->
@@ -17,6 +20,8 @@
                 <div class="card">
                     <div class="card-header">All Animals</div>
                         <div class="card-body">
+                        <!-- If there are no animals in the system then inform the user,
+                        else, display a table showing all the animals. -->
                         @if(count($animals) == null)
                             <p>There are currently no animals in the system!</p>
                         @else
@@ -37,6 +42,9 @@
                                             <tr>
                                                 <td> {{ $animal->name }} </td>
                                                 <td> {{ $animal->dob }} </td>
+                                                <!-- If the animal is unavailable, get the user who has adopted it
+                                                    so the relevant information about the animal's availability can
+                                                    be displayed. -->
                                                 @if($animal->availability == 'Unavailable')
                                                     <?php
                                                         $adoptionRequest = App\Models\AdoptionRequest::where('animal_id', $animal->id)
@@ -47,6 +55,8 @@
                                                 @else
                                                     <td> {{ $animal-> availability }} </td>
                                                 @endif
+                                                <!-- Button next to each animal which users can click on to see
+                                                    more details about the animal. -->
                                                 <td><a href="{{route('animals.show', ['id' => $animal->id])}}"
                                                 class="btn btn-primary">Details</a></td>
                                             </tr>

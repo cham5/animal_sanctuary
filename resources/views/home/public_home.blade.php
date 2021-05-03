@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+<!-- Home page for public users. They will be able to see all the animals
+    available for adoption. -->
 @section('content')
 <div class="container">
+    <!-- A navigation section so a public user can click on a button to 
+        see the adoption requests that they have made. -->
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -38,6 +42,8 @@
             <div class="card">
                 <div class="card-header">Available Animals</div>
                     <div class="card-body">
+                    <!-- If there are no available animals, inform the user.
+                        If there is, then display the table containing the animals. -->
                         @if(count($animals) == null)
                         <p>There are currently no available animals!</p>
                         @else
@@ -57,9 +63,14 @@
                                         <tr>
                                             <td> {{ $animal->name }} </td>
                                             <td> {{ $animal->dob }} </td>
+                                            <!-- For each animal displayed on the table there will also be a button next
+                                                to it in which users can click to see more details about the animal.
+                                                The button takes them to a page showing all the details for the specific animal. -->
                                             <td><a href="{{route('animals.show', ['id' => $animal->id])}}"
                                             class="btn btn-primary">Details</a></td>
                                             <td>
+                                            <!-- Users will also be able to adopt an animal via a form button that will show
+                                                next to each of the animals on the table. -->
                                                 <form action="/requests" method="post">
                                                     @csrf
                                                     <input type="hidden" id="animalId" name="animalId" value="{{$animal->id}}">

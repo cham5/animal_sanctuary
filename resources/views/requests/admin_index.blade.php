@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+<!-- Page that appears when users with admin rights (staff users) go to see the
+    completed adoption requests (either approved or denied). -->
+
 @section('content')
     <div class="container">
         <a href="/home" class="btn btn-primary">Back to Home</a>
@@ -9,6 +12,8 @@
                 <div class="card">
                     <div class="card-header">Completed Adoption Requests</div>
                     <div class="card-body">
+                    <!-- If no completed adoption requests have been made then inform the user. 
+                        If they have then display the table containing all completed requests. -->
                         @if(count($adoptionRequests) == null)
                             <p>There are currently no completed adoption requests!</p>
                         @else
@@ -22,6 +27,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <!-- Getting the user and animal entry associated with the adoption request
+                                        so that the names for each one can be displayed in the table. -->
                                         @foreach($adoptionRequests as $adoptionRequest)
                                             <?php
                                                 $user = App\Models\User::find($adoptionRequest->user_id);

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
+<!-- Page that allows staff users to add a new animal entry to the system. -->
 @section('content')
-    
     <div class="container">
         <a href="/home" class="btn btn-primary">Back to Home</a>
         <br><br>
@@ -30,6 +30,7 @@
                 <div class="card">
                     <div class="card-header">Add a New Animal</div>
                     <div class="card-body">
+                    <!-- Form in which staff users can enter the details for the new animal. -->
                         <form class="form-horizontal" method="post" action="/animals" enctype="multipart/form-data">
                             @csrf
                             <div class="col-md-8">
@@ -48,6 +49,7 @@
                                 <label for="image">Image</label>
                                 <input type="file" id="image" name="image">
                             </div>
+                            <br>
                             <div class="col-md-6 col-md-offset-4">
                                 <input type="submit" value="Add Animal" class="btn btn-primary">
                             </div>

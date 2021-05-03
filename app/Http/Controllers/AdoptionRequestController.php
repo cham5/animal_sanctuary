@@ -12,10 +12,13 @@ use App\Models\User;
 class AdoptionRequestController extends Controller
 {
     public function __construct() {
+        // ensuring users have to be signed in.
         $this->middleware('auth');
     }
 
+    // displaying all the pending adoption requests to the staff user's home page.
     public function display() {
+        // performing a check to see if the user has admin rights.
         if (Gate::allows('admin-check')) {
             $adoptionRequests = AdoptionRequest::where('status', 'Pending')->get();
             return view('home.admin_home', ['adoptionRequests' => $adoptionRequests]);
@@ -36,13 +39,20 @@ class AdoptionRequestController extends Controller
         }
     }
 
+    // getting all the adoption requests specific to the user.
     public function getUserAdoptionRequests() {
+        // checks to see if the user is a normal public user, then returns
+        // the appropriate view and data.
         if (Gate::denies('admin-check')) {
+            // due to defining a one-to-many relationship between a user and
+            // adoption requests, it's possible to retrieve a specifc user's
+            // requests like so
             $adoptionRequests = User::find(Auth::id())->adoptionRequests;
             return view('requests.index', ['adoptionRequests' => $adoptionRequests]);
         }
     }
 
+    // storing the adoption request in the system.
     public function store() {
         // check to see if user has already sent an adoption request for this animal
         // that is still pending
@@ -59,11 +69,15 @@ class AdoptionRequestController extends Controller
             $adoptionRequest->save();
             // notify with a successful adoption request
             return back()->with('success', 'Adoption request has been made.');
+        // else - we know that the user has therefore already made an adoption request that is still
+        // pending, so inform the user with an error.
         } else {
             return back()->withErrors(['errors' => 'You already have a pending request for this animal!']);
         }
     }
 
+    // updating the information of an adoption request - more specifically its status
+    // which only staff users can do.
     public function update() {
         // retrieving the associated adoption request & animal
         $adoptionRequest = AdoptionRequest::findOrFail(request('adoptionRequestId'));

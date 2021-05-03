@@ -19,7 +19,9 @@ class CreateAnimalsTable extends Migration
             $table->string('name');
             $table->date('dob');
             $table->string('description');
+            // an animal's picture can be set to null.
             $table->string('picture')->nullable();
+            // enum values for availability - either Available or Unavailable.
             $table->enum('availability', ['Available', 'Unavailable']);
         });
     }

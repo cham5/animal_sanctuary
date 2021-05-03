@@ -1,3 +1,4 @@
+<!-- Basic master template that the landing page extends. -->
 <!DOCTYPE html>
 <html>
     <head>

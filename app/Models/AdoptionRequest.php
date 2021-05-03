@@ -10,6 +10,7 @@ class AdoptionRequest extends Model
 {
     use HasFactory;
 
+    // reverse of a one-to-many relationship. 
     public function user() {
         return $this->belongsTo(User::class);
     }

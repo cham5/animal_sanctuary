@@ -42,7 +42,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Setting a one-to-many relationship between user and adoption request
+    // Setting a one-to-many relationship between user and adoption request.
     public function adoptionRequests() {
         return $this->hasMany(AdoptionRequest::class);
     }
